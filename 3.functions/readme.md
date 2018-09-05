@@ -1,7 +1,7 @@
 # Azure Functions
 https://azure.microsoft.com/en-us/services/functions/
 
-# Issues
+## Issues
 1. Determine correct messaging infrastructure [Event Hub, Event Grid, Queue, Topic, etc.]
 2. Language Support: https://docs.microsoft.com/en-us/azure/azure-functions/supported-languages
 
