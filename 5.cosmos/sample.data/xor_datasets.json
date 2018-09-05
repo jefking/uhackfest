@@ -1,0 +1,191 @@
+{
+    "datasets": [
+        {
+            "aoi": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -163.670106127567,
+                            58.7574827153705
+                        ],
+                        [
+                            -163.700784762755,
+                            58.9860889463579
+                        ],
+                        [
+                            -164.004841179626,
+                            59.4864157979747
+                        ],
+                        [
+                            -163.766465038948,
+                            58.3110418111385
+                        ],
+                        [
+                            -163.670106127567,
+                            58.7574827153705
+                        ]
+                    ]
+                ]
+            },
+            "band": 4,
+            "segment_acquisition_timestamp": "2013-01-12T00:00:00.000000Z",
+            "segment_id": "dtZkx3XLY8YJTMYQ2o9cUmqgwQMaZw0t",
+            "satellite": "JK1",
+            "tdi": 24,
+            "camera": 2,
+            "detector": 5,
+            "data_generation_timestamp": "2006-01-19T00:00:00.000000Z",
+            "workflow_id": "yzwlMIJpwBnE09nNEtx2nlXzGUSYjviA",
+            "source_dataset_uuid": "a8c12c8c-1a61-3edb-820f-d0bae6380c5a",
+            "tag": "ZXFWVRy3fDoEfGEqEKslMKUlqmHnmDII",
+            "submission_timestamp": "null",
+            "sensor_config": {
+                "num_pixels": 4657692,
+                "pixel_size": [5.12, 5.02]
+            },
+            "xor_config": {
+                "M_SM_TO_MRC": [
+                    [[0.356],[0.234],[0],[0.683]],
+                    [[0.666],[0.123],[1],[0.009]],
+                    [[0.34],[0],[0.2445],[1.23]],
+                    [[-1.222],[-0.455],[-0.008],[0.01]]
+                ]
+            },
+            "optical_distortion_parameter_uuid": "b1ff9442-97f8-3cf9-cc08-eb5c0dd81962",
+            "xor_parameter_uuid": "70355fab-836a-5742-a470-bb9d2d6ff276",
+            "star_tracker_config": 5,
+            "objects": [
+                "cloud://supercomp-production-flight/parent-folder/sub-folder/MRC_IMAGE_2A_8_MRC_IMAGE_2A_5_oda_raw_marking_results.csv",
+                "cloud://supercomp-production-flight/parent-folder/sub-folder/MRC_IMAGE_2A_8_MRC_IMAGE_2A_5_oda_raw_marking_results.png"
+            ],
+            "status": "CREATED",
+            "uuid": "0476ea66-cc37-4854-9be8-bcf9b3bef6b8"
+        },
+        {
+            "aoi": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -65.0313153946794,
+                            -30.0227043686459
+                        ],
+                        [
+                            -64.4587327617726,
+                            -30.1759654936802
+                        ],
+                        [
+                            -63.7145806235258,
+                            -29.798136913801
+                        ],
+                        [
+                            -63.5412585915442,
+                            -29.4674281752566
+                        ],
+                        [
+                            -65.0313153946794,
+                            -30.0227043686459
+                        ]
+                    ]
+                ]
+            },
+            "band": 1,
+            "segment_acquisition_timestamp": "2019-10-24T00:00:00.000000Z",
+            "segment_id": "6KfNe4S9XJ3s11StUzrOsbRv2ao7BE9w",
+            "satellite": "JK2",
+            "tdi": 24,
+            "camera": 2,
+            "detector": 5,
+            "data_generation_timestamp": "2004-04-01T00:00:00.000000Z",
+            "workflow_id": "Q7p3TV8BYETap8PsKeHAmreKXN12MsVN",
+            "source_dataset_uuid": "cd0557e3-3650-a966-72df-88e3dfad38be",
+            "tag": "eRUAq83D21M51LMUtN2JBZn0fLHnH40x",
+            "submission_timestamp": "null",
+            "sensor_config": {
+                "num_pixels": 4657692,
+                "pixel_size": [5.12, 5.02]
+            },
+            "xor_config": {
+                "M_SM_TO_MRC": [
+                    [[0.356],[0.234],[0],[0.683]],
+                    [[0.666],[0.123],[1],[0.009]],
+                    [[0.34],[0],[0.2445],[1.23]],
+                    [[-1.222],[-0.455],[-0.008],[0.01]]
+                ]
+            },
+            "optical_distortion_parameter_uuid": "bb748e0a-d5a0-ea52-7019-adc9219a240f",
+            "xor_parameter_uuid": "b75782bf-ba65-cfce-3c24-2ecc253b4691",
+            "star_tracker_config": 5,
+            "objects": [
+                "cloud://supercomp-production-flight/parent-folder/sub-folder/MRC_IMAGE_2A_8_MRC_IMAGE_2A_5_oda_raw_marking_results.csv",
+                "cloud://supercomp-production-flight/parent-folder/sub-folder/MRC_IMAGE_2A_8_MRC_IMAGE_2A_5_oda_raw_marking_results.png"
+            ],
+            "status": "CREATED",
+            "uuid": "0ef128f5-6bf7-491d-9c07-42770bc3a093"
+        },
+        {
+            "aoi": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            142.61712079041,
+                            -56.5855292793529
+                        ],
+                        [
+                            140.861190857572,
+                            -56.3375674967889
+                        ],
+                        [
+                            140.683602051571,
+                            -56.7847907230257
+                        ],
+                        [
+                            141.612108981735,
+                            -57.9174494483773
+                        ],
+                        [
+                            142.61712079041,
+                            -56.5855292793529
+                        ]
+                    ]
+                ]
+            },
+            "band": 2,
+            "segment_acquisition_timestamp": "2012-02-14T00:00:00.000000Z",
+            "segment_id": "MkbKdFyQHlwDwmzIRYvYiCxyh53EYhRM",
+            "satellite": "JK5",
+            "tdi": 38,
+            "camera": 1,
+            "detector": 3,
+            "data_generation_timestamp": "2015-09-14T00:00:00.000000Z",
+            "workflow_id": "2qwcWsKPk2X672nGVyDjPBsTMWH3esg3",
+            "source_dataset_uuid": "b9125063-6f07-9a82-d294-e00fb2899d7f",
+            "tag": "9hV0ThNY1HZ4ALg4lpKkxSlL3BdJneBn",
+            "submission_timestamp": "null",
+            "sensor_config": {
+                "num_pixels": 4657692,
+                "pixel_size": [5.12, 5.02]
+
+            },
+            "xor_config": {
+                "M_SM_TO_MRC": [
+                    [[0.356],[0.234],[0],[0.683]],
+                    [[0.666],[0.123],[1],[0.009]],
+                    [[0.34],[0],[0.2445],[1.23]],
+                    [[-1.222],[-0.455],[-0.008],[0.01]]
+                ]
+            },
+            "optical_distortion_parameter_uuid": "674a5955-0092-9151-5f35-1665276635ec",
+            "xor_parameter_uuid": "38e63b31-18a9-2dc3-4b2a-a3c01a03ede0",
+            "star_tracker_config": 5,
+            "objects": [
+                "cloud://supercomp-production-flight/parent-folder/sub-folder/MRC_IMAGE_2A_8_MRC_IMAGE_2A_5_oda_raw_marking_results.csv",
+                "cloud://supercomp-production-flight/parent-folder/sub-folder/MRC_IMAGE_2A_8_MRC_IMAGE_2A_5_oda_raw_marking_results.png"
+            ],
+            "status": "CREATED",
+            "uuid": "e127d5b9-3dd7-4009-abde-f5153d829873"
+        }
+    ]
+}
