@@ -1,16 +1,17 @@
 # Factors
-	Partition Key: as RU's are spread across partitions evenly, hot partitions can become an issue; if that happens, then RU's should be provisioned for peak hot partition, resulting in wasted RU's across ancillary partitions.
-	Consistency Models: lower tiers of consistency can equate to 50% reduction in throughput needs.
-	Result Sets: size of results can impact throughput needs (minimize)
-	Index: Data can be omitted from the index; which requires less computation on write
+	1. Partition Key: as RU's are spread across partitions evenly, hot partitions can become an issue; if that happens, then RU's should be provisioned for peak hot partition, resulting in wasted RU's across ancillary partitions.
+	2. Consistency Models: lower tiers of consistency can equate to 50% reduction in throughput needs.
+	3. Result Sets: size of results can impact throughput needs (minimize)
+	4. Index: Data can be omitted from the index; which requires less computation on write
 
 
 # Help
-	Cosmos DB Docs: https://www.gotcosmos.com/
-	Playground: https://www.documentdb.com/sql/demo
-	Free: https://azure.microsoft.com/en-us/try/cosmosdb/
-	RU Calculator: https://www.documentdb.com/capacityplanner
-	Indexing Policy: https://docs.microsoft.com/en-us/azure/cosmos-db/indexing-policies
+	1. Official Docs: https://www.gotcosmos.com/
+	2. Playground: https://www.documentdb.com/sql/demo
+	3. Free: https://azure.microsoft.com/en-us/try/cosmosdb/
+	4. RU Calculator: https://www.documentdb.com/capacityplanner
+	5. Indexing Policy: https://docs.microsoft.com/en-us/azure/cosmos-db/indexing-policies
 
 
+## Info
 In sizing for price I am taking the baseline of what the partner has given me. If they are comfortable with that, then we can look at specific queries against real/mock data to determine actual cost of execution. Which will help us get a better estimate of RU's through the response headers which show RU usage. We will also be able to determine a more focused partition key strategy and tune queries to make the most of the RU's.
