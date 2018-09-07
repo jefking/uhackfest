@@ -1,3 +1,7 @@
+Login to Azure via CLI
+az login
+
+Create resource: example for subdirectories
 az group deployment create \
   --name deployment \
   --resource-group testing \
