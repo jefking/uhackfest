@@ -22,12 +22,6 @@
     },    
     "serviceBusNamespaceName": {
       "value": "GEN-UNIQUE"
-    },
-    "serviceBusQueueName1": {
-      "value": "GEN-UNIQUE"
-    },
-    "serviceBusQueueName2": {
-      "value": "GEN-UNIQUE"
     }
 	}
 }
