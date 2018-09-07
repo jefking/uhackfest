@@ -1,0 +1,11 @@
+Create RBAC App Role
+az ad sp create-for-rbac --skip-assignment
+
+Create AKS Cluster
+az group deployment create \
+  --name deployment \
+  --resource-group testing \
+  --template-file resources.json \
+  --parameters parameters.json
+
+  az aks get-credentials --resource-group test --name aks101cluster
