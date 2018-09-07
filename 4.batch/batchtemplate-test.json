@@ -1,0 +1,116 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "batchAccountName": {
+      "type": "String",
+      "metadata": {
+        "description": "Batch Account Name"
+      }
+    },
+    "storageAccountsku": {
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_ZRS",
+        "Premium_LRS"
+      ],
+      "type": "String",
+      "metadata": {
+        "description": "Storage Account type"
+      }
+    },
+    "location": {
+      "defaultValue": "[resourceGroup().location]",
+      "type": "String",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    }
+  },
+  "variables": {
+    "storageAccountName": "[concat(uniqueString(resourceGroup().id),'storage')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "[parameters('storageAccountsku')]"
+      },
+      "kind": "Storage",
+      "name": "[variables('storageAccountname')]",
+      "apiVersion": "2016-01-01",
+      "location": "[parameters('location')]",
+      "tags": {
+        "ObjectName": "[variables('storageAccountName')]"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Batch/batchAccounts",
+      "name": "[parameters('batchAccountName')]",
+      "apiVersion": "2015-12-01",
+      "location": "[parameters('location')]",
+      "tags": {
+        "ObjectName": "[parameters('batchAccountName')]"
+      },
+      "properties": {
+        "autoStorage": {
+          "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        }
+      },
+      "resources": [
+        {
+          "type": "pools",
+          "name": "urthecastbatchpool93",
+          "apiVersion": "2017-09-01",
+          "properties": {
+            "displayName": "Urthecast - Batch service",
+            "vmSize": "standard_d2_v2",
+            "scaleSettings": {
+              "fixedScale": {
+                "resizeTimeout": "PT15M",
+                "targetDedicatedNodes": 0,
+                "targetLowPriorityNodes": 4
+              },
+              "autoScale": null
+            },
+            "maxTasksPerNode": 1,
+            "deploymentConfiguration": {
+              "virtualMachineConfiguration": {
+                "imageReference": {
+                  "publisher": "Canonical",
+                  "offer": "UbuntuServer",
+                  "sku": "16.04-LTS",
+                  "version": "latest",
+                  "id": null
+                },
+                "nodeAgentSkuId": "batch.node.ubuntu 16.04"
+              }
+            },
+            "applicationLicenses": null
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Batch/batchAccounts', parameters('batchAccountName'))]"
+          ]
+
+        }
+      ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+      ]
+    }
+
+  ],
+  "outputs": {
+    "storageAccountName": {
+      "type": "String",
+      "value": "[variables('storageAccountName')]"
+    },
+    "batchAccountName": {
+      "type": "String",
+      "value": "[parameters('batchAccountName')]"
+    }
+  }
+}
