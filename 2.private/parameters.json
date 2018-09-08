@@ -1,18 +1,37 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "dnsLabelPrefix": {
-      "value": "GEN-UNIQUE"
+    "virtualMachineAdminUserName": {
+      "value": "azureuser"
     },
-    "publicIPAddressType": {
-      "value": "Dynamic"
+    "virtualMachineNamePrefix": {
+      "value": "DemoVM0"
     },
-    "vnetAddressPrefix": {
-      "value": "10.0.0.0/16"
+    "virtualMachineCount": {
+      "value": 3
     },
-    "subnetPrefix": {
-      "value": "10.0.0.0/24"
+    "virtualMachineSize": {
+      "value": "Standard_DS1_v2"
+    },
+    "operatingSystem": {
+      "value": "18.04"
+    },
+    "availabilitySetName": {
+      "value": "DemoAvailabilitySet"
+    },
+    "dnsPrefixForPublicIP": {
+      "value": "GEN-UNIQUE-12"
+    },
+    "location": {
+      "value": "westus2"
+      }
+    },
+    "httpsTrafficOnlyEnabled": {
+     "value": false
+    },
+    "sshPublicKey": {
+      "value": "GEN-SSH-PUB-KEY"
     }
   }
 }
