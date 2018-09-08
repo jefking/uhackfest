@@ -1,6 +1,9 @@
 Login to Azure via CLI
 az login
 
+Set Default Subscription
+az account set --subscription ""
+
 Create resource: example for subdirectories
 az group deployment create \
   --name deployment \
