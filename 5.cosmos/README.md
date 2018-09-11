@@ -23,7 +23,6 @@
 ### Information
 In sizing for price I am taking the baseline of what the partner has given me. If they are comfortable with that, then we can look at specific queries against real/mock data to determine actual cost of execution. Which will help us get a better estimate of RU's through the response headers which show RU usage. We will also be able to determine a more focused partition key strategy and tune queries to make the most of the RU's.
 
-
 ## Examples
 ### Datasets (mock)
 1. [CC](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/cc_datasets.json)
