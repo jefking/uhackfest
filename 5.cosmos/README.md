@@ -27,6 +27,13 @@ In sizing for price I am taking the baseline of what the partner has given me. I
 
 ## Examples
 
+Data:
+	1. [CC](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/cc_datasets.json)
+	2. [FF](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/ff_datasets.json)
+	3. [OD](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/od_datasets.json)
+	4. [PSF](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/psf_datasets.json)
+	5. [XOR](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/xor_datasets.json)
+
 Queries:
 	1. Polygon input about the size of Washingon state
 	2. Time range input spanning one week to one month’s worth of data
