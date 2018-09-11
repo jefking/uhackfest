@@ -14,7 +14,7 @@
         "SQL",
         "Table"
       ],
-      "defaultValue": "Cassandra"
+      "defaultValue": "MongoDB"
     },
     "databaseAccountName": {
       "type": "string",
