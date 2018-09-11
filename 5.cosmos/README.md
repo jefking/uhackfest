@@ -28,6 +28,6 @@ In sizing for price I am taking the baseline of what the partner has given me. I
 ## Examples
 
 Queries:
-	Polygon input about the size of Washingon state
-	Time range input spanning one week to one month’s worth of data
-	“In” queries so that we can select the applicable detectors
+	1. Polygon input about the size of Washingon state
+	2. Time range input spanning one week to one month’s worth of data
+	3. “In” queries so that we can select the applicable detectors
