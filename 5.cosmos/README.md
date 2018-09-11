@@ -30,6 +30,8 @@ In sizing for price I am taking the baseline of what the partner has given me. I
 3. [OD](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/od_datasets.json)
 4. [PSF](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/psf_datasets.json)
 5. [XOR](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/xor_datasets.json)
+6. [GEO](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/geo_datasets.json)
+7. [TIME](https://github.com/jefking/uhackfest/blob/master/5.cosmos/sample.data/time_datasets.json)
 
 ### Queries
 1. Polygon input about the size of Washingon state
