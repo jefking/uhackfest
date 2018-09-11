@@ -23,3 +23,11 @@
 
 ### Information
 In sizing for price I am taking the baseline of what the partner has given me. If they are comfortable with that, then we can look at specific queries against real/mock data to determine actual cost of execution. Which will help us get a better estimate of RU's through the response headers which show RU usage. We will also be able to determine a more focused partition key strategy and tune queries to make the most of the RU's.
+
+
+## Examples
+
+Queries:
+	Polygon input about the size of Washingon state
+	Time range input spanning one week to one month’s worth of data
+	“In” queries so that we can select the applicable detectors
