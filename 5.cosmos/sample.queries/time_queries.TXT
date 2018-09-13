@@ -1,0 +1,26 @@
+// SQL
+
+SELECT * 
+FROM time_datasets t 
+WHERE t.TimeStamp BETWEEN '2005-07-12 07:00:00' and '2005-07-12 08:00:00'
+
+/// MONGO
+
+{ timestamp: {
+    $gte: ISODate("2010-04-29T00:00:00.000Z"),
+    $lt: ISODate("2017-05-01T00:00:00.000Z")
+}
+}
+
+// FUll Example 
+items.save({
+    name: "example",
+    created_at: ISODate("2010-04-30T00:00:00.000Z")
+})
+items.find({
+    created_at: {
+        $gte: ISODate("2010-04-29T00:00:00.000Z"),
+        $lt: ISODate("2010-05-01T00:00:00.000Z")
+    }
+})
+=> { "_id" : ObjectId("4c0791e2b9ec877893f3363b"), "name" : "example", "created_at" : "Sun May 30 2010 00:00:00 GMT+0300 (EEST)" }
