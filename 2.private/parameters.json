@@ -6,7 +6,7 @@
       "value": "azureuser"
     },
     "virtualMachineNamePrefix": {
-      "value": "DemoVM0"
+      "value": "DemoVM099"
     },
     "virtualMachineCount": {
       "value": 3
@@ -18,10 +18,10 @@
       "value": "18.04"
     },
     "availabilitySetName": {
-      "value": "DemoAvailabilitySet"
+      "value": "DemoAvailabilitySet2"
     },
     "dnsPrefixForPublicIP": {
-      "value": "GEN-UNIQUE-12"
+      "value": "GEN-UNIQUE-99"
     },
     "location": {
       "value": "westus2"

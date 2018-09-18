@@ -20,7 +20,7 @@
       }
     },
     "virtualMachineNamePrefix": {
-      "defaultValue": "DemoVM0",
+      "defaultValue": "DemoVM09",
       "type": "string",
       "maxLength": 15,
       "metadata": {
@@ -70,7 +70,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 14,
-      "defaultValue": "GEN-UNIQUE-12",
+      "defaultValue": "GEN-UNIQUE-99",
       "metadata": {
         "description": "Globally unique DNS prefix for the Public IPs used to access the Virtual Machines"
       }
@@ -116,7 +116,11 @@
       "type": "Microsoft.Network/virtualNetworks",
       "location": "[parameters('location')]",
       "apiVersion": "2018-02-01",
-      "dependsOn": [],
+      "dependsOn": [
+
+
+
+      ],
       "tags": {
         "displayName": "[variables('demoVNETName')]"
       },
