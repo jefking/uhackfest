@@ -16,7 +16,7 @@ az group create -g uhackfest2
 ```bash
 az group deployment create\
     -g uhackfest2\
-    --n uhackfestdeployment\
+    --name uhackfestdeployment\
     --template-file azuredeploy.json\
     --parameters dnsPrefixForPublicIP=uhackfest
 ```
