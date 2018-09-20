@@ -11,7 +11,8 @@
         "storageAccounts_fromrelay_name": "[concat([parameters('storage_prefix')], 'groundstation')]",
         "storageAccounts_raw_name": "[concat([parameters('storage_prefix')], 'raw')]",
         "storageAccounts_level0_name": "[concat([parameters('storage_prefix')], 'level0')]",
-        "storageAccounts_level1_name": "[concat([parameters('storage_prefix')], 'level1')]"
+        "storageAccounts_level1_name": "[concat([parameters('storage_prefix')], 'level1')]",
+        "location": "[resourceGroup().location]"
     },
     "resources": [
         {
@@ -24,7 +25,7 @@
             "kind": "StorageV2",
             "name": "[variables('storageAccounts_fromrelay_name')]",
             "apiVersion": "2018-03-01-preview",
-            "location": "southeastasia",
+            "location": "[variables('location')]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -57,7 +58,7 @@
             "kind": "StorageV2",
             "name": "[variables('storageAccounts_raw_name')]",
             "apiVersion": "2018-03-01-preview",
-            "location": "southeastasia",
+            "location": "[variables('location')]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -90,7 +91,7 @@
             "kind": "StorageV2",
             "name": "[variables('storageAccounts_level0_name')]",
             "apiVersion": "2018-03-01-preview",
-            "location": "southeastasia",
+            "location": "[variables('location')]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -123,7 +124,7 @@
             "kind": "StorageV2",
             "name": "[variables('storageAccounts_level1_name')]",
             "apiVersion": "2018-03-01-preview",
-            "location": "southeastasia",
+            "location": "[variables('location')]",
             "tags": {},
             "scale": null,
             "properties": {
