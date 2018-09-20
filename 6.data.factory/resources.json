@@ -1,0 +1,150 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storage_prefix": {
+            "defaultValue": "earth",
+            "type": "String"
+        }
+    },
+    "variables": {
+        "storageAccounts_fromrelay_name": "[concat([parameters('storage_prefix')], 'groundstation')]",
+        "storageAccounts_raw_name": "[concat([parameters('storage_prefix')], 'raw')]",
+        "storageAccounts_level0_name": "[concat([parameters('storage_prefix')], 'level0')]",
+        "storageAccounts_level1_name": "[concat([parameters('storage_prefix')], 'level1')]"
+    },
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/011fd5e2-60c9-4a71-8bcd-659a9fbbfd4c/resourceGroups/dataflow/providers/Microsoft.Storage/storageAccounts/fromrelay'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Premium_LRS",
+                "tier": "Premium"
+            },
+            "kind": "StorageV2",
+            "name": "[variables('storageAccounts_fromrelay_name')]",
+            "apiVersion": "2018-03-01-preview",
+            "location": "southeastasia",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/011fd5e2-60c9-4a71-8bcd-659a9fbbfd4c/resourceGroups/dataflow/providers/Microsoft.Storage/storageAccounts/fromrelay'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Premium_LRS",
+                "tier": "Premium"
+            },
+            "kind": "StorageV2",
+            "name": "[variables('storageAccounts_raw_name')]",
+            "apiVersion": "2018-03-01-preview",
+            "location": "southeastasia",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/011fd5e2-60c9-4a71-8bcd-659a9fbbfd4c/resourceGroups/dataflow/providers/Microsoft.Storage/storageAccounts/fromrelay'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Premium_LRS",
+                "tier": "Premium"
+            },
+            "kind": "StorageV2",
+            "name": "[variables('storageAccounts_level0_name')]",
+            "apiVersion": "2018-03-01-preview",
+            "location": "southeastasia",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/011fd5e2-60c9-4a71-8bcd-659a9fbbfd4c/resourceGroups/dataflow/providers/Microsoft.Storage/storageAccounts/fromrelay'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Premium_LRS",
+                "tier": "Premium"
+            },
+            "kind": "StorageV2",
+            "name": "[variables('storageAccounts_level1_name')]",
+            "apiVersion": "2018-03-01-preview",
+            "location": "southeastasia",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        }
+    ]
+}
