@@ -8,10 +8,10 @@
         }
     },
     "variables": {
-        "storageAccounts_fromrelay_name": "[concat([parameters('storage_prefix')], 'groundstation')]",
-        "storageAccounts_raw_name": "[concat([parameters('storage_prefix')], 'raw')]",
-        "storageAccounts_level0_name": "[concat([parameters('storage_prefix')], 'level0')]",
-        "storageAccounts_level1_name": "[concat([parameters('storage_prefix')], 'level1')]",
+        "storageAccounts_fromrelay_name": "[concat(parameters('storage_prefix'), 'groundstation')]",
+        "storageAccounts_raw_name": "[concat(parameters('storage_prefix'), 'raw')]",
+        "storageAccounts_level0_name": "[concat(parameters('storage_prefix'), 'level0')]",
+        "storageAccounts_level1_name": "[concat(parameters('storage_prefix'), 'level1')]",
         "location": "[resourceGroup().location]"
     },
     "resources": [
