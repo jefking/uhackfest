@@ -3,3 +3,19 @@ Major challenges facing Azure upgrade. Tackled in order; to help learning and re
 
 ## Outcome
 Validation of upgrade to Azure!
+
+## Commands
+```
+Login to Azure via CLI
+az login
+
+Set Default Subscription
+az account set --subscription ""
+
+Create resource: example for subdirectories
+az group deployment create \
+  --name deployment \
+  --resource-group testing \
+  --template-file resources.json \
+  --parameters parameters.json
+```

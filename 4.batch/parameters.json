@@ -2,8 +2,17 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-      "batchAccountName": {
-          "value": "GEN-UNIQUE-12"
-      }
+    "batchAccountName": {
+        "value": "GEN-UNIQUE-12"
+    },
+    "eventGridTopicName": {
+        "value": "GEN-UNIQUE-12"
+    },
+    "eventGridSubscriptionName": {
+        "value": "GEN-UNIQUE-12"
+    },
+    "eventGridSubscriptionUrl": {
+        "value": "GEN-UNIQUE-12"
+    }
   }
 }
