@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "batchAccountName": {
-      "type": "String",
+      "type": "string",
       "metadata": {
         "description": "Batch Account Name"
       }
@@ -11,26 +11,37 @@
     "storageAccountsku": {
       "defaultValue": "Standard_LRS",
       "allowedValues": [
-        "Standard_LRS",
-        "Standard_GRS",
-        "Standard_ZRS",
-        "Premium_LRS"
+        "Standard_LRS"
       ],
-      "type": "String",
+      "type": "string",
       "metadata": {
         "description": "Storage Account type"
       }
     },
-    "location": {
-      "defaultValue": "[resourceGroup().location]",
-      "type": "String",
+    "eventGridTopicName": {
+      "type": "string",
       "metadata": {
-        "description": "Location for all resources."
+        "description": "The name of the Event Grid custom topic."
+      }
+    },
+    "eventGridSubscriptionName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Event Grid custom topic's subscription."
+      }
+    },
+    "eventGridSubscriptionUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "The webhook URL to send the subscription events to. This URL must be valid and must be prepared to accept the Event Grid webhook URL challenge request. (RequestBin URLs are exempt from this requirement.)"
       }
     }
   },
   "variables": {
-    "storageAccountName": "[concat(uniqueString(resourceGroup().id),'storage')]"
+    "dataStorageAccountName": "[concat('raw', uniqueString(resourceGroup().id))]",
+    "storageAccountName": "[concat('batch', uniqueString(resourceGroup().id))]",
+    "location": "[resourceGroup().location]",
+    "batchname":"[concat('batch', uniqueString(resourceGroup().id))]"
   },
   "resources": [
     {
@@ -39,19 +50,31 @@
         "name": "[parameters('storageAccountsku')]"
       },
       "kind": "Storage",
+      "name": "[variables('dataStorageAccountName')]",
+      "apiVersion": "2016-01-01",
+      "location": "[variables('location')]",
+      "tags": {
+        "ObjectName": "[variables('dataStorageAccountName')]"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "[parameters('storageAccountsku')]"
+      },
+      "kind": "Storage",
       "name": "[variables('storageAccountname')]",
       "apiVersion": "2016-01-01",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "ObjectName": "[variables('storageAccountName')]"
-      },
-      "properties": {}
+      }
     },
     {
       "type": "Microsoft.Batch/batchAccounts",
       "name": "[parameters('batchAccountName')]",
       "apiVersion": "2015-12-01",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "ObjectName": "[parameters('batchAccountName')]"
       },
@@ -63,10 +86,10 @@
       "resources": [
         {
           "type": "pools",
-          "name": "urthecastbatchpool93",
+          "name": "[concat(variables('batchname'),'batchpool')]",
           "apiVersion": "2017-09-01",
           "properties": {
-            "displayName": "Urthecast - Batch service",
+            "displayName": "[parameters('batchAccountName')] Batch service",
             "vmSize": "standard_d2_v2",
             "scaleSettings": {
               "fixedScale": {
@@ -94,23 +117,27 @@
           "dependsOn": [
             "[resourceId('Microsoft.Batch/batchAccounts', parameters('batchAccountName'))]"
           ]
-
         }
       ],
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
       ]
-    }
-
-  ],
-  "outputs": {
-    "storageAccountName": {
-      "type": "String",
-      "value": "[variables('storageAccountName')]"
     },
-    "batchAccountName": {
-      "type": "String",
-      "value": "[parameters('batchAccountName')]"
+    {
+      "name": "[parameters('eventGridTopicName')]",
+      "type": "Microsoft.EventGrid/topics",
+      "location": "[variables('location')]",
+      "apiVersion": "2018-01-01"
+    },
+    {
+      "name": "[concat(parameters('eventGridTopicName'), '/Microsoft.EventGrid/', parameters('eventGridSubscriptionName'))]",
+      "type": "Microsoft.EventGrid/topics/providers/eventSubscriptions",
+      "location": "[variables('location')]",
+      "apiVersion": "2018-01-01",
+      "dependsOn": [
+        "[parameters('eventGridTopicName')]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('dataStorageAccountName'))]"
+      ]
     }
-  }
+  ]
 }
