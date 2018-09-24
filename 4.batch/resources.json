@@ -32,6 +32,7 @@
     },
     "eventGridSubscriptionUrl": {
       "type": "string",
+      "defaultValue": "https://www.google.com",
       "metadata": {
         "description": "The webhook URL to send the subscription events to. This URL must be valid and must be prepared to accept the Event Grid webhook URL challenge request. (RequestBin URLs are exempt from this requirement.)"
       }
@@ -41,7 +42,7 @@
     "dataStorageAccountName": "[concat('raw', uniqueString(resourceGroup().id))]",
     "storageAccountName": "[concat('batch', uniqueString(resourceGroup().id))]",
     "location": "[resourceGroup().location]",
-    "batchname":"[concat('batch', uniqueString(resourceGroup().id))]"
+    "batchname": "[concat('batch', uniqueString(resourceGroup().id))]"
   },
   "resources": [
     {
@@ -95,7 +96,7 @@
               "fixedScale": {
                 "resizeTimeout": "PT15M",
                 "targetDedicatedNodes": 0,
-                "targetLowPriorityNodes": 4
+                "targetLowPriorityNodes": 0
               },
               "autoScale": null
             },
@@ -124,20 +125,28 @@
       ]
     },
     {
-      "name": "[parameters('eventGridTopicName')]",
-      "type": "Microsoft.EventGrid/topics",
-      "location": "[variables('location')]",
-      "apiVersion": "2018-01-01"
-    },
-    {
-      "name": "[concat(parameters('eventGridTopicName'), '/Microsoft.EventGrid/', parameters('eventGridSubscriptionName'))]",
-      "type": "Microsoft.EventGrid/topics/providers/eventSubscriptions",
-      "location": "[variables('location')]",
+      "type": "Microsoft.Storage/storageAccounts/providers/eventSubscriptions",
+      "name": "[concat(parameters('storageName'), '/Microsoft.EventGrid/', parameters('eventGridSubscriptionName'))]",
       "apiVersion": "2018-01-01",
       "dependsOn": [
-        "[parameters('eventGridTopicName')]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('dataStorageAccountName'))]"
-      ]
+        "[parameters('storageAccountName')]"
+      ],
+      "properties": {
+        "destination": {
+          "endpointType": "WebHook",
+          "properties": {
+            "endpointUrl": "[parameters('eventGridSubscriptionUrl')]"
+          }
+        },
+        "filter": {
+          "subjectBeginsWith": "",
+          "subjectEndsWith": "",
+          "isSubjectCaseSensitive": false,
+          "includedEventTypes": [
+            "All"
+          ]
+        }
+      }
     }
   ]
 }

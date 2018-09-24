@@ -6,13 +6,13 @@
         "value": "GEN-UNIQUE-12"
     },
     "eventGridTopicName": {
-        "value": "GEN-UNIQUE-12"
+        "value": "egtopic"
     },
     "eventGridSubscriptionName": {
-        "value": "GEN-UNIQUE-12"
+        "value": "egsub"
     },
     "eventGridSubscriptionUrl": {
-        "value": "GEN-UNIQUE-12"
+        "value": "egsuburl"
     }
   }
 }

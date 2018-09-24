@@ -12,10 +12,13 @@ az login
 Set Default Subscription
 az account set --subscription ""
 
+Create Resource Group
+az group create -g hackers
+
 Create resource: example for subdirectories
 az group deployment create \
   --name deployment \
-  --resource-group testing \
+  --resource-group hackers \
   --template-file resources.json \
   --parameters parameters.json
 ```
