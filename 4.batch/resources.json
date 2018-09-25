@@ -60,7 +60,7 @@
     "l1Storage": "[concat('l1', uniqueString(resourceGroup().id))]",
     "functionStorage": "[concat('function', uniqueString(parameters('siteName')))]",
     "location": "[resourceGroup().location]",
-    "batchname": "[concat('batch-', uniqueString(resourceGroup().id))]",
+    "batchName": "[parameters('batchAccountName')]",
     "repoUrl": "https://github.com/jefking/func-create-job",
     "branch": "master"
   },
@@ -198,12 +198,17 @@
       },
       "resources": [
         {
-          "type": "pools",
-          "name": "[concat(variables('batchname'),'batchpool')]",
+          "type": "Microsoft.Batch/batchAccounts/pools",
+          "name": "[concat(variables('batchName'),'/raw')]",
           "apiVersion": "2017-09-01",
           "properties": {
-            "displayName": "[parameters('batchAccountName')] Batch service",
+            "displayName": "[variables('batchName')] Batch service",
             "vmSize": "[parameters('batchVMSku')]",
+            "interNodeCommunication": "Disabled",
+            "maxTasksPerNode": 1,
+            "taskSchedulingPolicy": {
+                "nodeFillType": "Spread"
+            },
             "scaleSettings": {
               "fixedScale": {
                 "resizeTimeout": "PT15M",
@@ -212,53 +217,102 @@
               },
               "autoScale": null
             },
-            "maxTasksPerNode": 1,
             "deploymentConfiguration": {
               "virtualMachineConfiguration": {
-                "imageReference": {
-                  "publisher": "Canonical",
-                  "offer": "UbuntuServer",
-                  "sku": "16.04-LTS",
-                  "version": "latest",
-                  "id": null
-                },
-                "nodeAgentSkuId": "batch.node.ubuntu 16.04"
+                  "imageReference": {
+                      "publisher": "microsoft-azure-batch",
+                      "offer": "centos-container",
+                      "sku": "7-5",
+                      "version": "latest"
+                  },
+                  "nodeAgentSkuId": "batch.node.centos 7"
               }
             },
             "applicationLicenses": null
           },
           "dependsOn": [
-            "[resourceId('Microsoft.Batch/batchAccounts', parameters('batchAccountName'))]"
+            "[resourceId('Microsoft.Batch/batchAccounts', variables('batchName'))]"
+          ]
+        },
+        {
+          "type": "Microsoft.Batch/batchAccounts/pools",
+          "name": "[concat(variables('batchName'),'/l0')]",
+          "apiVersion": "2017-09-01",
+          "properties": {
+            "displayName": "[variables('batchName')] Batch service",
+            "vmSize": "[parameters('batchVMSku')]",
+            "interNodeCommunication": "Disabled",
+            "maxTasksPerNode": 1,
+            "taskSchedulingPolicy": {
+                "nodeFillType": "Spread"
+            },
+            "scaleSettings": {
+              "fixedScale": {
+                "resizeTimeout": "PT15M",
+                "targetDedicatedNodes": 0,
+                "targetLowPriorityNodes": "[parameters('lowPriorityNodes')]"
+              },
+              "autoScale": null
+            },
+            "deploymentConfiguration": {
+              "virtualMachineConfiguration": {
+                  "imageReference": {
+                      "publisher": "microsoft-azure-batch",
+                      "offer": "centos-container",
+                      "sku": "7-5",
+                      "version": "latest"
+                  },
+                  "nodeAgentSkuId": "batch.node.centos 7"
+              }
+            },
+            "applicationLicenses": null
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Batch/batchAccounts', variables('batchName'))]"
+          ]
+        },
+        {
+          "type": "Microsoft.Batch/batchAccounts/pools",
+          "name": "[concat(variables('batchName'),'/l1')]",
+          "apiVersion": "2017-09-01",
+          "properties": {
+            "displayName": "[variables('batchName')] Batch service",
+            "vmSize": "[parameters('batchVMSku')]",
+            "interNodeCommunication": "Disabled",
+            "maxTasksPerNode": 1,
+            "taskSchedulingPolicy": {
+                "nodeFillType": "Spread"
+            },
+            "scaleSettings": {
+              "fixedScale": {
+                "resizeTimeout": "PT15M",
+                "targetDedicatedNodes": 0,
+                "targetLowPriorityNodes": "[parameters('lowPriorityNodes')]"
+              },
+              "autoScale": null
+            },
+            "deploymentConfiguration": {
+              "virtualMachineConfiguration": {
+                  "imageReference": {
+                      "publisher": "microsoft-azure-batch",
+                      "offer": "centos-container",
+                      "sku": "7-5",
+                      "version": "latest"
+                  },
+                  "nodeAgentSkuId": "batch.node.centos 7"
+              }
+            },
+            "applicationLicenses": null
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Batch/batchAccounts', variables('batchName'))]"
           ]
         }
       ],
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage'))]"
-      ]
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/providers/eventSubscriptions",
-      "name": "[concat(variables('rawStorage'), '/Microsoft.EventGrid/', parameters('eventGridSubscriptionName'))]",
-      "apiVersion": "2018-01-01",
-      "properties": {
-        "destination": {
-          "endpointType": "WebHook",
-          "properties": {
-            "endpointUrl": "[concat('https://',reference(resourceId('Microsoft.Web/sites', parameters('siteName'))).hostNames[0],'api/hook')]"
-          }
-        },
-        "filter": {
-          "subjectBeginsWith": "",
-          "subjectEndsWith": "",
-          "isSubjectCaseSensitive": false,
-          "includedEventTypes": [
-            "All"
-          ]
-        }
-      },
-      "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage'))]",
-        "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('l0Storage'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('l1Storage'))]"
       ]
     }
   ]
