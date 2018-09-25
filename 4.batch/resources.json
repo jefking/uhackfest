@@ -18,6 +18,20 @@
         "description": "Storage Account type"
       }
     },
+    "lowPriorityNodes": {
+      "defaultValue": "0",
+      "type": "integer",
+      "metadata": {
+        "description": "Number of VM's to allocate"
+      }
+    },
+    "batchVMSku": {
+      "defaultValue": "standard_d2_v2",
+      "type": "string",
+      "metadata": {
+        "description": "Azure Batch VM size (pool)"
+      }
+    },
     "eventGridTopicName": {
       "type": "string",
       "metadata": {
@@ -30,19 +44,22 @@
         "description": "The name of the Event Grid custom topic's subscription."
       }
     },
-    "eventGridSubscriptionUrl": {
+    "siteName": {
       "type": "string",
-      "defaultValue": "https://prod-16.westus2.logic.azure.com:443/workflows/245a9ba8a2034412903a3491e1f87570/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=LuCsJI-Tcsi-wQcvX3dVpAPFACBHUEzEulmWO0-hjZ8",
       "metadata": {
-        "description": "The webhook URL to send the subscription events to. This URL must be valid and must be prepared to accept the Event Grid webhook URL challenge request. (RequestBin URLs are exempt from this requirement.)"
+        "description": "The name of the function app that you wish to create."
       }
     }
   },
   "variables": {
-    "dataStorageAccountName": "[concat('raw', uniqueString(resourceGroup().id))]",
-    "storageAccountName": "[concat('batch', uniqueString(resourceGroup().id))]",
+    "vhdStorage": "[concat('raw-', uniqueString(resourceGroup().id))]",
+    "batchStorage": "[concat('batch-', uniqueString(resourceGroup().id))]",
+    "functionStorage": "[concat('function', uniqueString(parameters('siteName')))]",
     "location": "[resourceGroup().location]",
-    "batchname": "[concat('batch', uniqueString(resourceGroup().id))]"
+    "batchname": "[concat('batch-', uniqueString(resourceGroup().id))]",
+    "contentShareName": "[toLower(parameters('siteName'))]",
+    "repoUrl": "https://github.com/jefking/func-create-job",
+    "branch": "master"
   },
   "resources": [
     {
@@ -51,11 +68,11 @@
         "name": "[parameters('storageAccountsku')]"
       },
       "kind": "Storage",
-      "name": "[variables('dataStorageAccountName')]",
+      "name": "[variables('vhdStorage')]",
       "apiVersion": "2016-01-01",
       "location": "[variables('location')]",
       "tags": {
-        "ObjectName": "[variables('dataStorageAccountName')]"
+        "ObjectName": "[variables('vhdStorage')]"
       }
     },
     {
@@ -64,12 +81,78 @@
         "name": "[parameters('storageAccountsku')]"
       },
       "kind": "Storage",
-      "name": "[variables('storageAccountname')]",
+      "name": "[variables('batchStorage')]",
       "apiVersion": "2016-01-01",
       "location": "[variables('location')]",
       "tags": {
-        "ObjectName": "[variables('storageAccountName')]"
+        "ObjectName": "[variables('batchStorage')]"
       }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "[parameters('storageAccountsku')]"
+      },
+      "kind": "Storage",
+      "name": "[variables('functionStorage')]",
+      "apiVersion": "2016-01-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "ObjectName": "[variables('functionStorage')]"
+      }
+    },
+    {
+      "apiVersion": "2016-03-01",
+      "name": "[parameters('siteName')]",
+      "type": "Microsoft.Web/sites",
+      "properties": {
+        "name": "[parameters('siteName')]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "AzureWebJobsDashboard",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2015-05-01-preview').key1)]"
+            },
+            {
+              "name": "AzureWebJobsStorage",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2015-05-01-preview').key1)]"
+            },
+            {
+              "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2015-05-01-preview').key1)]"
+            },
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~1"
+            },
+            {
+              "name": "ROUTING_EXTENSION_VERSION",
+              "value": "~0.1"
+            }
+          ]
+        },
+        "clientAffinityEnabled": false
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties": {
+            "RepoUrl": "[variables('repoURL')]",
+            "branch": "[variables('branch')]",
+            "IsManualIntegration": true
+          }
+        }
+      ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('functionStorage'))]"
+      ],
+      "location": "[resourceGroup().location]",
+      "kind": "functionapp"
     },
     {
       "type": "Microsoft.Batch/batchAccounts",
@@ -91,12 +174,12 @@
           "apiVersion": "2017-09-01",
           "properties": {
             "displayName": "[parameters('batchAccountName')] Batch service",
-            "vmSize": "standard_d2_v2",
+            "vmSize": "[parameters('batchVMSku')]",
             "scaleSettings": {
               "fixedScale": {
                 "resizeTimeout": "PT15M",
                 "targetDedicatedNodes": 0,
-                "targetLowPriorityNodes": 0
+                "targetLowPriorityNodes": "[parameters('lowPriorityNodes')]"
               },
               "autoScale": null
             },
@@ -132,7 +215,7 @@
         "destination": {
           "endpointType": "WebHook",
           "properties": {
-            "endpointUrl": "[parameters('eventGridSubscriptionUrl')]"
+            "endpointUrl": "[concat('https://',reference(resourceId('Microsoft.Web/sites', parameters('siteName'))).hostNames[0])]"
           }
         },
         "filter": {
@@ -145,7 +228,8 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
       ]
     }
   ]
