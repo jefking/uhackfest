@@ -54,7 +54,7 @@
     }
   },
   "variables": {
-    "vhdStorage": "[concat('batch', uniqueString(resourceGroup().id))]",
+    "vhdStorage": "[concat('vhds', uniqueString(resourceGroup().id))]",
     "rawStorage": "[concat('raw', uniqueString(resourceGroup().id))]",
     "l0Storage": "[concat('l0', uniqueString(resourceGroup().id))]",
     "l1Storage": "[concat('l1', uniqueString(resourceGroup().id))]",
