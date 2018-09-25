@@ -58,7 +58,7 @@
     "rawStorage": "[concat('raw', uniqueString(resourceGroup().id))]",
     "l0Storage": "[concat('l0', uniqueString(resourceGroup().id))]",
     "l1Storage": "[concat('l1', uniqueString(resourceGroup().id))]",
-    "functionStorage": "[concat('function', uniqueString(parameters('siteName')))]",
+    "functionStorage": "[concat('function', uniqueString(resourceGroup().id))]",
     "location": "[resourceGroup().location]",
     "batchName": "[parameters('batchAccountName')]",
     "repoUrl": "https://github.com/jefking/func-create-job",
