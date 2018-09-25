@@ -258,7 +258,6 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage'))]",
-        "[concat('https://',reference(resourceId('Microsoft.Web/sites', parameters('siteName'))).hostNames[0])]",
         "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
       ]
     }
