@@ -1,0 +1,49 @@
+{
+    "aoi": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    57.5529903969203,
+                    -78.3332822842226
+                ],
+                [
+                    57.0758324913679,
+                    -77.8766914841288
+                ],
+                [
+                    56.5981334548769,
+                    -77.7889967391687
+                ],
+                [
+                    56.6958276745855,
+                    -79.7863880321549
+                ],
+                [
+                    57.5529903969203,
+                    -78.3332822842226
+                ]
+            ]
+        ]
+    },
+    "band": 7,
+    "segment_acquisition_timestamp": "2004-09-19T00:00:00.000000Z",
+    "segment_id": "0jtdPAmAMPLjNdYM4LQdON92UJ1LlWX5",
+    "satellite": "JK3",
+    "tdi": 49,
+    "camera": 2,
+    "detector": 5,
+    "data_generation_timestamp": "2000-07-19T00:00:00.000000Z",
+    "workflow_id": "ubcF8NRjBSgnsEEkN4NQbfoX9BUnf3PW",
+    "source_dataset_uuid": "6ac0c6b1-212d-535a-5a7b-a9d235eecad6",
+    "tag": "YJE4FzpSLctnBA8aW1RSMRnhWQCMh47X",
+    "submission_timestamp": "2018-08-27T22:01:51.563350Z",
+    "cross_calibration_params_uuid": "64ceb256-4d0c-08d9-641e-56396d035943",
+    "abs_gain": 1.23998,
+    "abs_offset": 1.17749,
+    "objects": [
+        "cloud://supercomp-production-flight/parent-folder/sub-folder/MRC_IMAGE_2A_8_MRC_IMAGE_2A_5_oda_raw_marking_results.csv"
+    ],
+    "status": "CREATED",
+    "uuid": "d7d8d1a7-f991-47a4-90a9-03f17b96d88c"
+}
