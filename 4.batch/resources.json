@@ -19,8 +19,10 @@
       }
     },
     "lowPriorityNodes": {
-      "defaultValue": "0",
-      "type": "integer",
+      "defaultValue": 0,
+      "minValue": 0,
+      "maxValue": 1000,
+      "type": "int",
       "metadata": {
         "description": "Number of VM's to allocate"
       }
@@ -52,12 +54,13 @@
     }
   },
   "variables": {
-    "vhdStorage": "[concat('raw-', uniqueString(resourceGroup().id))]",
-    "batchStorage": "[concat('batch-', uniqueString(resourceGroup().id))]",
+    "vhdStorage": "[concat('batch', uniqueString(resourceGroup().id))]",
+    "rawStorage": "[concat('raw', uniqueString(resourceGroup().id))]",
+    "l0Storage": "[concat('l0', uniqueString(resourceGroup().id))]",
+    "l1Storage": "[concat('l1', uniqueString(resourceGroup().id))]",
     "functionStorage": "[concat('function', uniqueString(parameters('siteName')))]",
     "location": "[resourceGroup().location]",
     "batchname": "[concat('batch-', uniqueString(resourceGroup().id))]",
-    "contentShareName": "[toLower(parameters('siteName'))]",
     "repoUrl": "https://github.com/jefking/func-create-job",
     "branch": "master"
   },
@@ -81,11 +84,37 @@
         "name": "[parameters('storageAccountsku')]"
       },
       "kind": "Storage",
-      "name": "[variables('batchStorage')]",
+      "name": "[variables('rawStorage')]",
       "apiVersion": "2016-01-01",
       "location": "[variables('location')]",
       "tags": {
-        "ObjectName": "[variables('batchStorage')]"
+        "ObjectName": "[variables('rawStorage')]"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "[parameters('storageAccountsku')]"
+      },
+      "kind": "Storage",
+      "name": "[variables('l0Storage')]",
+      "apiVersion": "2016-01-01",
+      "location": "[variables('location')]",
+      "tags": {
+        "ObjectName": "[variables('l0Storage')]"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "[parameters('storageAccountsku')]"
+      },
+      "kind": "Storage",
+      "name": "[variables('l1Storage')]",
+      "apiVersion": "2016-01-01",
+      "location": "[variables('location')]",
+      "tags": {
+        "ObjectName": "[variables('l1Storage')]"
       }
     },
     {
@@ -111,15 +140,15 @@
           "appSettings": [
             {
               "name": "AzureWebJobsDashboard",
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2015-05-01-preview').key1)]"
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('functionStorage'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('functionStorage')), '2015-05-01-preview').key1)]"
             },
             {
               "name": "AzureWebJobsStorage",
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2015-05-01-preview').key1)]"
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('functionStorage'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('functionStorage')), '2015-05-01-preview').key1)]"
             },
             {
               "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2015-05-01-preview').key1)]"
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('functionStorage'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('functionStorage')), '2015-05-01-preview').key1)]"
             },
             {
               "name": "FUNCTIONS_EXTENSION_VERSION",
@@ -164,7 +193,7 @@
       },
       "properties": {
         "autoStorage": {
-          "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+          "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('vhdStorage'))]"
         }
       },
       "resources": [
@@ -204,12 +233,12 @@
         }
       ],
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage'))]"
       ]
     },
     {
       "type": "Microsoft.Storage/storageAccounts/providers/eventSubscriptions",
-      "name": "[concat(variables('storageAccountName'), '/Microsoft.EventGrid/', parameters('eventGridSubscriptionName'))]",
+      "name": "[concat(variables('rawStorage'), '/Microsoft.EventGrid/', parameters('eventGridSubscriptionName'))]",
       "apiVersion": "2018-01-01",
       "properties": {
         "destination": {
@@ -228,7 +257,7 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage'))]",
         "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
       ]
     }

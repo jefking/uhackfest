@@ -5,14 +5,14 @@
     "batchAccountName": {
         "value": "GEN-UNIQUE-12"
     },
+    "siteName": {
+        "value": "eghook"
+    },
     "eventGridTopicName": {
         "value": "egtopic"
     },
     "eventGridSubscriptionName": {
         "value": "egsub"
-    },
-    "eventGridSubscriptionUrl": {
-        "value": "egsuburl"
     }
   }
 }
