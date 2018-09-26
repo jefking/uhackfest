@@ -165,6 +165,10 @@
             {
               "name": "BatchAccountUrl",
               "value": "<WIRE>"
+            },
+            {
+              "name": "BatchPool",
+              "value": "raw"
             }
           ]
         },
@@ -215,7 +219,7 @@
             "interNodeCommunication": "Disabled",
             "maxTasksPerNode": 1,
             "taskSchedulingPolicy": {
-                "nodeFillType": "Spread"
+              "nodeFillType": "Spread"
             },
             "scaleSettings": {
               "fixedScale": {
@@ -227,13 +231,13 @@
             },
             "deploymentConfiguration": {
               "virtualMachineConfiguration": {
-                  "imageReference": {
-                      "publisher": "microsoft-azure-batch",
-                      "offer": "centos-container",
-                      "sku": "7-5",
-                      "version": "latest"
-                  },
-                  "nodeAgentSkuId": "batch.node.centos 7"
+                "imageReference": {
+                  "publisher": "microsoft-azure-batch",
+                  "offer": "centos-container",
+                  "sku": "7-5",
+                  "version": "latest"
+                },
+                "nodeAgentSkuId": "batch.node.centos 7"
               }
             },
             "applicationLicenses": null
@@ -252,7 +256,7 @@
             "interNodeCommunication": "Disabled",
             "maxTasksPerNode": 1,
             "taskSchedulingPolicy": {
-                "nodeFillType": "Spread"
+              "nodeFillType": "Spread"
             },
             "scaleSettings": {
               "fixedScale": {
@@ -264,13 +268,13 @@
             },
             "deploymentConfiguration": {
               "virtualMachineConfiguration": {
-                  "imageReference": {
-                      "publisher": "microsoft-azure-batch",
-                      "offer": "centos-container",
-                      "sku": "7-5",
-                      "version": "latest"
-                  },
-                  "nodeAgentSkuId": "batch.node.centos 7"
+                "imageReference": {
+                  "publisher": "microsoft-azure-batch",
+                  "offer": "centos-container",
+                  "sku": "7-5",
+                  "version": "latest"
+                },
+                "nodeAgentSkuId": "batch.node.centos 7"
               }
             },
             "applicationLicenses": null
@@ -289,7 +293,7 @@
             "interNodeCommunication": "Disabled",
             "maxTasksPerNode": 1,
             "taskSchedulingPolicy": {
-                "nodeFillType": "Spread"
+              "nodeFillType": "Spread"
             },
             "scaleSettings": {
               "fixedScale": {
@@ -301,13 +305,13 @@
             },
             "deploymentConfiguration": {
               "virtualMachineConfiguration": {
-                  "imageReference": {
-                      "publisher": "microsoft-azure-batch",
-                      "offer": "centos-container",
-                      "sku": "7-5",
-                      "version": "latest"
-                  },
-                  "nodeAgentSkuId": "batch.node.centos 7"
+                "imageReference": {
+                  "publisher": "microsoft-azure-batch",
+                  "offer": "centos-container",
+                  "sku": "7-5",
+                  "version": "latest"
+                },
+                "nodeAgentSkuId": "batch.node.centos 7"
               }
             },
             "applicationLicenses": null
@@ -321,6 +325,35 @@
         "[resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('l0Storage'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('l1Storage'))]"
+      ]
+    },
+    {
+      "name": "[parameters('eventGridTopicName')]",
+      "type": "Microsoft.EventGrid/topics",
+      "location": "[variables('location')]",
+      "apiVersion": "2018-01-01"
+    },
+    {
+      "name": "[concat(parameters('eventGridTopicName'), '/Microsoft.EventGrid/', parameters('eventGridSubscriptionName'))]",
+      "type": "Microsoft.EventGrid/topics/providers/eventSubscriptions",
+      "location": "[variables('location')]",
+      "apiVersion": "2018-01-01",
+      "properties": {
+        "destination": {
+          "endpointType": "WebHook",
+          "properties": {
+            "endpointUrl": "[concat('https://',reference(resourceId('Microsoft.Web/sites', parameters('siteName'))).hostNames[0])]"
+          }
+        },
+        "filter": {
+          "includedEventTypes": [
+            "All"
+          ]
+        }
+      },
+      "dependsOn": [
+        "[parameters('eventGridTopicName')]",
+        "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
       ]
     }
   ]
