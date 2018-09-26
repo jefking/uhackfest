@@ -157,6 +157,18 @@
             {
               "name": "ROUTING_EXTENSION_VERSION",
               "value": "~0.1"
+            },
+            {
+              "name": "BatchAccountName",
+              "value": "[parameters('batchAccountName')]"
+            },
+            {
+              "name": "BatchAccountKey",
+              "value": "<WIRE>"
+            },
+            {
+              "name": "BatchAccountUrl",
+              "value": "<WIRE>"
             }
           ]
         },
