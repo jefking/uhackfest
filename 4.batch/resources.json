@@ -147,10 +147,6 @@
               "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('functionStorage'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('functionStorage')), '2015-05-01-preview').key1)]"
             },
             {
-              "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('functionStorage'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('functionStorage')), '2015-05-01-preview').key1)]"
-            },
-            {
               "name": "FUNCTIONS_EXTENSION_VERSION",
               "value": "~1"
             },
