@@ -230,7 +230,7 @@
           "name": "[concat(variables('batchName'),'/raw')]",
           "apiVersion": "2017-09-01",
           "properties": {
-            "displayName": "[variables('batchName')] Batch service",
+            "displayName": "[concat(variables('batchName'), 'Batch service')]",
             "vmSize": "[parameters('batchVMSku')]",
             "interNodeCommunication": "Disabled",
             "maxTasksPerNode": 1,
@@ -267,7 +267,7 @@
           "name": "[concat(variables('batchName'),'/l0')]",
           "apiVersion": "2017-09-01",
           "properties": {
-            "displayName": "[variables('batchName')] Batch service",
+            "displayName": "[concat(variables('batchName'), 'Batch service')]",
             "vmSize": "[parameters('batchVMSku')]",
             "interNodeCommunication": "Disabled",
             "maxTasksPerNode": 1,
