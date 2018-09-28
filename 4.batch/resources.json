@@ -65,7 +65,7 @@
     "repoUrl": "https://github.com/jefking/func-create-job",
     "branch": "master",
     "acrAdminUserEnabled": false,
-    "acrName": "[concat('acr-',parameters('batchAccountName'))]"
+    "acrName": "registry"
   },
   "resources": [
     {
