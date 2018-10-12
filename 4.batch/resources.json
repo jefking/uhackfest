@@ -51,12 +51,6 @@
       "metadata": {
         "description": "The name of the function app."
       }
-    },
-    "registryName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the Azure container registry."
-      }
     }
   },
   "variables": {
@@ -65,7 +59,6 @@
     "l0Storage": "[concat('l0', uniqueString(resourceGroup().id))]",
     "l1Storage": "[concat('l1', uniqueString(resourceGroup().id))]",
     "functionStorage": "[concat('function', uniqueString(resourceGroup().id))]",
-    "acrStorage": "[concat('acr', uniqueString(resourceGroup().id))]",
     "location": "[resourceGroup().location]",
     "batchName": "[parameters('batchAccountName')]",
     "repoUrl": "https://github.com/jefking/func-create-job",
@@ -135,19 +128,6 @@
       "location": "[resourceGroup().location]",
       "tags": {
         "ObjectName": "[variables('functionStorage')]"
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "sku": {
-        "name": "[parameters('storageAccountsku')]"
-      },
-      "kind": "Storage",
-      "name": "[variables('acrStorage')]",
-      "apiVersion": "2016-01-01",
-      "location": "[resourceGroup().location]",
-      "tags": {
-        "ObjectName": "[variables('acrStorage')]"
       }
     },
     {
@@ -262,31 +242,6 @@
         "[parameters('eventGridTopicName')]",
         "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
       ]
-    },
-    {
-      "name": "[parameters('registryName')]",
-      "type": "Microsoft.ContainerRegistry/registries",
-      "apiVersion": "2016-06-27-preview",
-      "location": "[variables('location')]",
-      "comments": "Container registry for storing docker images",
-      "sku": {
-        "name": "Basic",
-        "tier": "Basic"
-      },
-      "dependsOn": [
-        "[variables('acrStorage')]"
-      ],
-      "tags": {
-        "displayName": "Container Registry",
-        "container.registry": "[parameters('registryName')]"
-      },
-      "properties": {
-        "adminUserEnabled": true,
-        "storageAccount": {
-          "accessKey": "[listKeys(variables('acrStorage'),'2015-06-15').key1]",
-          "name": "[variables('acrStorage')]"
-        }
-      }
     }
   ]
 }

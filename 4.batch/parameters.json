@@ -13,9 +13,6 @@
     },
     "eventGridSubscriptionName": {
         "value": "egsub"
-    },
-    "registryName": {
-        "value": "acregistry"
     }
   }
 }
