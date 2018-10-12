@@ -155,6 +155,10 @@
               "value": "~0.1"
             },
             {
+              "name": "ImageryConnection",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('rawStorage'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage')), '2015-05-01-preview').key1)]"
+            },
+            {
               "name": "BatchAccountName",
               "value": "[parameters('batchAccountName')]"
             },
@@ -190,6 +194,7 @@
         }
       ],
       "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('functionStorage'))]"
       ],
       "location": "[resourceGroup().location]",
