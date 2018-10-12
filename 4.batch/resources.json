@@ -188,35 +188,6 @@
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('vhdStorage'))]"
       ]
-    },
-    {
-      "name": "[parameters('eventGridTopicName')]",
-      "type": "Microsoft.EventGrid/topics",
-      "location": "[variables('location')]",
-      "apiVersion": "2018-01-01"
-    },
-    {
-      "name": "[concat(parameters('eventGridTopicName'), '/Microsoft.EventGrid/', parameters('eventGridSubscriptionName'))]",
-      "type": "Microsoft.EventGrid/topics/providers/eventSubscriptions",
-      "location": "[variables('location')]",
-      "apiVersion": "2018-01-01",
-      "properties": {
-        "destination": {
-          "endpointType": "WebHook",
-          "properties": {
-            "endpointUrl": "[concat('https://',reference(resourceId('Microsoft.Web/sites', parameters('siteName'))).hostNames[0])]"
-          }
-        },
-        "filter": {
-          "includedEventTypes": [
-            "All"
-          ]
-        }
-      },
-      "dependsOn": [
-        "[parameters('eventGridTopicName')]",
-        "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
-      ]
     }
   ]
 }
