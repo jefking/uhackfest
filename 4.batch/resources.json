@@ -56,8 +56,6 @@
   "variables": {
     "vhdStorage": "[concat('vhds', uniqueString(resourceGroup().id))]",
     "rawStorage": "[concat('raw', uniqueString(resourceGroup().id))]",
-    "l0Storage": "[concat('l0', uniqueString(resourceGroup().id))]",
-    "l1Storage": "[concat('l1', uniqueString(resourceGroup().id))]",
     "functionStorage": "[concat('function', uniqueString(resourceGroup().id))]",
     "location": "[resourceGroup().location]",
     "batchName": "[parameters('batchAccountName')]",
@@ -89,32 +87,6 @@
       "location": "[variables('location')]",
       "tags": {
         "ObjectName": "[variables('rawStorage')]"
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "sku": {
-        "name": "[parameters('storageAccountsku')]"
-      },
-      "kind": "Storage",
-      "name": "[variables('l0Storage')]",
-      "apiVersion": "2016-01-01",
-      "location": "[variables('location')]",
-      "tags": {
-        "ObjectName": "[variables('l0Storage')]"
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "sku": {
-        "name": "[parameters('storageAccountsku')]"
-      },
-      "kind": "Storage",
-      "name": "[variables('l1Storage')]",
-      "apiVersion": "2016-01-01",
-      "location": "[variables('location')]",
-      "tags": {
-        "ObjectName": "[variables('l1Storage')]"
       }
     },
     {
@@ -214,9 +186,7 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('rawStorage'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('l0Storage'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('l1Storage'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('vhdStorage'))]"
       ]
     },
     {
