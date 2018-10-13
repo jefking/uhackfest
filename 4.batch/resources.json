@@ -144,7 +144,7 @@
             },
             {
               "name": "BatchPool",
-              "value": "raw"
+              "value": "<WIRE>"
             }
           ]
         },
