@@ -18,34 +18,6 @@
         "description": "Storage Account type"
       }
     },
-    "lowPriorityNodes": {
-      "defaultValue": 0,
-      "minValue": 0,
-      "maxValue": 1000,
-      "type": "int",
-      "metadata": {
-        "description": "Number of VM's to allocate"
-      }
-    },
-    "batchVMSku": {
-      "defaultValue": "standard_d2_v2",
-      "type": "string",
-      "metadata": {
-        "description": "Azure Batch VM size (pool)"
-      }
-    },
-    "eventGridTopicName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the Event Grid custom topic."
-      }
-    },
-    "eventGridSubscriptionName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the Event Grid custom topic's subscription."
-      }
-    },
     "siteName": {
       "type": "string",
       "metadata": {
@@ -54,10 +26,10 @@
     }
   },
   "variables": {
+    "location": "[resourceGroup().location]",
     "vhdStorage": "[concat('vhds', uniqueString(resourceGroup().id))]",
     "rawStorage": "[concat('raw', uniqueString(resourceGroup().id))]",
     "functionStorage": "[concat('function', uniqueString(resourceGroup().id))]",
-    "location": "[resourceGroup().location]",
     "batchName": "[parameters('batchAccountName')]",
     "repoUrl": "https://github.com/jefking/func-create-job",
     "branch": "master"
