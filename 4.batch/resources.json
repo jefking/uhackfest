@@ -23,6 +23,12 @@
       "metadata": {
         "description": "The name of the function app."
       }
+    },
+    "containerName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the container to run in Batch."
+      }
     }
   },
   "variables": {
@@ -117,6 +123,10 @@
             {
               "name": "BatchPool",
               "value": "<WIRE>"
+            },
+            {
+              "name": "ContainerName",
+              "value": "[parameters('containerName')]"
             }
           ]
         },
